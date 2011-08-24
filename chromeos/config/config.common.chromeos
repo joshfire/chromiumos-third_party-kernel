@@ -500,7 +500,6 @@ CONFIG_HID_CANDO=y
 # CONFIG_HID_CHICONY is not set
 # CONFIG_HID_CYPRESS is not set
 # CONFIG_HID_DRAGONRISE is not set
-# CONFIG_HID_EGALAX is not set
 # CONFIG_HID_ELECOM is not set
 # CONFIG_HID_EMS_FF is not set
 # CONFIG_HID_EZKEY is not set
