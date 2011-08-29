@@ -43,7 +43,7 @@
  *
  *****************************************************************************/
 
-#define DEBUG
+//#define DEBUG
 
 #include <linux/kernel.h>
 #include <linux/slab.h>
@@ -573,9 +573,6 @@ static int irtouch_read_data(struct usbtouch_usb *dev, unsigned char *pkt)
 	dev->x = (pkt[3] << 8) | pkt[2];
 	dev->y = (pkt[5] << 8) | pkt[4];
 	dev->touch = (pkt[1] & 0x03) ? 1 : 0;
-
-	printk(KERN_INFO "irtouch_read_data: x:(0 <= %d <= %d), y:(0 <= %d <= %d)\n",
-	       dev->x, dev->type->max_xc, dev->y, dev->type->max_yc);
 
 	return 1;
 }
