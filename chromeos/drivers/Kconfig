@@ -1,5 +1,6 @@
 menu "Chromeos Supplied Third-Party Device Drivers"
 
 source "chromeos/drivers/gobi/Kconfig"
+source "chromeos/drivers/nvidia/Kconfig"
 
 endmenu

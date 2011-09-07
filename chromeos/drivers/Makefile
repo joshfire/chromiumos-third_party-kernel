@@ -4,6 +4,7 @@
 
 obj-$(CONFIG_GOBI_QCSERIAL) += gobi/QCSerial2k/
 obj-$(CONFIG_GOBI_USBNET)   += gobi/QCUSBNet2k/
+obj-$(CONFIG_DRM_NVIDIA)    += nvidia/
 
 # This is a stupid trick to get kbuild to create chromeos/built-in.o
 obj- += foo.o
