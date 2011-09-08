@@ -1,6 +1,6 @@
 #
 # This Makefile was automatically generated; do not edit.
-# Generated on 'swio-display-x86-rhel47-04.nvidia.com' on Wed Aug 31 18:20:13 PDT 2011.
+# Generated on 'swio-display-x86-rhel47-03.nvidia.com' on Mon Jul 18 14:32:08 PDT 2011.
 #
 
 #
@@ -145,7 +145,7 @@ MODULE_OBJECT := $(MODULE_NAME).ko
 # NVIDIA specific CFLAGS and #define's.
 #
 
-EXTRA_CFLAGS += -D__KERNEL__ -DMODULE -DNVRM -DNV_VERSION_STRING=\"275.28\" -Wno-unused-function -UDEBUG -U_DEBUG -DNDEBUG
+EXTRA_CFLAGS += -D__KERNEL__ -DMODULE -DNVRM -DNV_VERSION_STRING=\"275.21\" -Wno-unused-function -UDEBUG -U_DEBUG -DNDEBUG
 
 
 COMPILE_TESTS = \

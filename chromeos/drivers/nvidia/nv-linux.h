@@ -85,11 +85,12 @@
 #include <linux/stddef.h>           /* NULL, offsetof                   */
 #include <linux/wait.h>             /* wait queues                      */
 #include <linux/string.h>           /* strchr(), strpbrk()              */
-
-#if !defined(NV_VMWARE)
+#ifdef NV_NO_CTYPE
+#define isspace(x) ((x) == ' ' || (x) == '\t')
+#else /* NV_NO_CTYPE */
 #include <linux/ctype.h>            /* isspace(), etc                   */
 #include <linux/console.h>          /* acquire_console_sem(), etc       */
-#endif
+#endif /* NV_NO_CTYPE */
 
 #include <linux/slab.h>             /* kmalloc, kfree, etc              */
 #include <linux/vmalloc.h>          /* vmalloc, vfree, etc              */
@@ -100,9 +101,7 @@
 #if !defined(KERNEL_2_4)
 #include <linux/sched.h>            /* suser(), capable() replacement   */
 #include <linux/moduleparam.h>      /* module_param()                   */
-#if !defined(NV_VMWARE)
 #include <asm/tlbflush.h>           /* flush_tlb(), flush_tlb_all()     */
-#endif
 #include <asm/kmap_types.h>         /* page table entry lookup          */
 #endif
 
@@ -200,8 +199,7 @@ RM_STATUS nvos_forward_error_to_cray(struct pci_dev *, NvU32,
 #include <linux/gdb.h>
 #endif
 
-#if !defined(NV_VMWARE) && \
-  (defined(CONFIG_AGP) || defined(CONFIG_AGP_MODULE))
+#if (defined (CONFIG_AGP) || defined (CONFIG_AGP_MODULE)) && (! defined(NV_NO_AGP))
 #define AGPGART
 #include <linux/agp_backend.h>
 #include <linux/agpgart.h>
@@ -218,18 +216,17 @@ RM_STATUS nvos_forward_error_to_cray(struct pci_dev *, NvU32,
 
 extern int nv_pat_mode;
 
-#if !defined(NV_VMWARE) && defined(CONFIG_HOTPLUG_CPU)
+#if defined(CONFIG_HOTPLUG_CPU) && (! defined(NV_NO_HOTPLUG_CPU))
 #define NV_ENABLE_HOTPLUG_CPU
 #include <linux/cpu.h>              /* CPU hotplug support              */
 #include <linux/notifier.h>         /* struct notifier_block, etc       */
 #endif
 
-#if !defined(NV_VMWARE) && \
-  (defined(CONFIG_I2C) || defined(CONFIG_I2C_MODULE))
+#if (defined(CONFIG_I2C) || defined(CONFIG_I2C_MODULE))
 #include <linux/i2c.h>
 #endif
 
-#if !defined(NV_VMWARE) && defined(CONFIG_ACPI)
+#if defined(CONFIG_ACPI) && (! defined(NV_NO_APM_ACPI))
 #include <acpi/acpi.h>
 #include <acpi/acpi_drivers.h>
 #if defined(NV_ACPI_DEVICE_OPS_HAS_MATCH) || defined(ACPI_VIDEO_HID)
@@ -883,7 +880,7 @@ static inline int nv_execute_on_all_cpus(void (*func)(void *info), void *info)
 #  define NV_MODULE_STRING_PARAMETER(x) MODULE_PARM(x, "s")
 #endif
 
-#if !defined(NV_VMWARE)
+#if !defined(NV_NO_IN_ATOMIC)
 #define NV_IN_ATOMIC()                  in_atomic()
 #else
 #define NV_IN_ATOMIC()                  (0)
@@ -1013,13 +1010,14 @@ static inline int nv_execute_on_all_cpus(void (*func)(void *info), void *info)
  * version, if any; if built for Linux 2.6, it will also determine if the
  * kernel comes with ACPI or APM power management support.
  */
-#if !defined(NV_VMWARE) && \
-  (!defined(KERNEL_2_4) && defined(CONFIG_PM))
+#ifndef NV_NO_APM_ACPI
+#if !defined(KERNEL_2_4) && defined(CONFIG_PM)
 #define NV_PM_SUPPORT_DEVICE_DRIVER_MODEL
 #if (defined(CONFIG_APM) || defined(CONFIG_APM_MODULE)) && !defined(CONFIG_ACPI)
 #define NV_PM_SUPPORT_NEW_STYLE_APM
 #endif
 #endif
+#endif /* NV_NO_APM_ACPI */
 
 /*
  * On Linux 2.6 kernels >= 2.6.11, the PCI subsystem provides a new 
@@ -1580,13 +1578,10 @@ extern int nv_update_memory_types;
 extern NvU64 __nv_supported_pte_mask;
 #endif
 
-#if !defined(NV_VMWARE)
-#define NV_LOCAL_BH_DISABLE()           local_bh_disable()
-#define NV_LOCAL_BH_ENABLE()            local_bh_enable()
-#else
-#define NV_LOCAL_BH_DISABLE()
-#define NV_LOCAL_BH_ENABLE()
-#endif
+#if defined(NV_NO_LOCAL_BH_ENABLE)
+#define local_bh_enable()
+#define local_bh_disable()
+#endif /* NV_NO_LOCAL_BH_ENABLE */
 
 int nv_verify_page_mappings(nv_pte_t *, unsigned int);
 

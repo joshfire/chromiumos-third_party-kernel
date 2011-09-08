@@ -1,20 +1,13 @@
-/* _NVRM_COPYRIGHT_BEGIN_
- *
- * Copyright 2005-2011 by NVIDIA Corporation.  All rights reserved.  All
- * information contained herein is proprietary and confidential to NVIDIA
- * Corporation.  Any use, reproduction, or disclosure without the written
- * permission of NVIDIA Corporation is prohibited.
- *
- * _NVRM_COPYRIGHT_END_
- */
+// Copyright stuff goes here when done (ask Terence)
 
+// include kernel i2c stuff
 #define  __NO_VERSION__
 
 #include "nv-misc.h"
 #include "os-interface.h"
 #include "nv-linux.h"
 
-#if defined(CONFIG_I2C) || defined(CONFIG_I2C_MODULE)
+#if (defined(CONFIG_I2C) || defined(CONFIG_I2C_MODULE)) && (! defined(NV_DISABLE_I2C))
 
 #if defined(KERNEL_2_4)
 extern int i2c_add_adapter (struct i2c_adapter *) __attribute__ ((weak));

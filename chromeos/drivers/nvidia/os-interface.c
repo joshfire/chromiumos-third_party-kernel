@@ -30,12 +30,12 @@ void NV_API_CALL os_disable_preemption(void)
 #if defined(preempt_disable)
     preempt_disable();
 #endif
-    NV_LOCAL_BH_DISABLE();
+    local_bh_disable();
 }
 
 void NV_API_CALL os_enable_preemption(void)
 {
-    NV_LOCAL_BH_ENABLE();
+    local_bh_enable();
 #if defined(preempt_enable)
     preempt_enable();
 #endif
@@ -1593,7 +1593,7 @@ RM_STATUS NV_API_CALL os_get_address_space_info(
 {
     RM_STATUS status = RM_OK;
 
-#if !defined(CONFIG_X86_4G) && !defined(NV_VMWARE)
+#if !defined(CONFIG_X86_4G) && !defined(NV_NO_THREAD_INFO)
     *kernelStartAddress = PAGE_OFFSET;
     *kernelEndAddress = (NvUPtr)0xffffffffffffffffULL;
     *userStartAddress = 0;

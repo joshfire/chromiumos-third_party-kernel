@@ -38,7 +38,7 @@ RM_STATUS NV_API_CALL os_raise_smp_barrier(void)
 #if defined(preempt_disable)
     preempt_disable();
 #endif
-    NV_LOCAL_BH_DISABLE();
+    local_bh_disable();
     atomic_set(&os_smp_barrier, 1);
     ret = NV_SMP_CALL_FUNCTION(ipi_handler, NULL, 0);
 #endif
@@ -51,7 +51,7 @@ RM_STATUS NV_API_CALL os_clear_smp_barrier(void)
     if (atomic_read(&os_smp_barrier) == 0)
         return RM_OK;
     atomic_set(&os_smp_barrier, 0);
-    NV_LOCAL_BH_ENABLE();
+    local_bh_enable();
 #if defined(preempt_enable)
     preempt_enable();
 #endif
