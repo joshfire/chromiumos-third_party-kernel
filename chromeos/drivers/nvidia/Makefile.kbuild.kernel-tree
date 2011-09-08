@@ -109,6 +109,12 @@ else
  endif
 endif
 
+# FIXME(arm): In Gentoo, these two variables resolve to the sources and
+# output paths of this module, not the root kernel path. This hack is
+# nasty; figure out the correct name.
+KERNEL_SOURCES := $(KERNEL_SOURCES)/../../..
+KERNEL_OUTPUT := $(KERNEL_OUTPUT)/../../..
+
 CC ?= cc
 HOST_CC ?= $(CC)
 LD ?= ld
@@ -117,7 +123,7 @@ ifndef ARCH
  ARCH := $(shell uname -m | sed -e 's/i.86/i386/')
 endif
 
-CONFTEST := /bin/sh $(src)/conftest.sh "$(CC)" "$(HOST_CC)" $(ARCH) $(KERNEL_SOURCES) $(KERNEL_OUTPUT)
+CONFTEST := /bin/sh $(SYSSRC)/conftest.sh "$(CC)" "$(HOST_CC)" $(ARCH) $(KERNEL_SOURCES) $(KERNEL_OUTPUT)
 
 KERNEL_UNAME ?= $(shell $(CONFTEST) get_uname)
 MODULE_ROOT := /lib/modules/$(KERNEL_UNAME)/kernel/drivers
