@@ -186,7 +186,7 @@ COMPILE_TESTS = \
 # to satisfy KBUILD requirements and to support NVIDIA specifics.
 #
 
-$(obj)/nv-kernel.o: $(src)/nv-kernel.o.uu
+$(obj)/nv-kernel.o: $(src)/nv-kernel.o.$(ARCH).uu
 	uudecode -o $@ $^
 
 $(obj)/$(VERSION_HEADER):
