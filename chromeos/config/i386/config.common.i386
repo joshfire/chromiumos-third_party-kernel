@@ -46,7 +46,7 @@ CONFIG_AGP=y
 # CONFIG_AGP_ATI is not set
 # CONFIG_AGP_EFFICEON is not set
 CONFIG_AGP_INTEL=y
-# CONFIG_AGP_NVIDIA is not set
+CONFIG_AGP_NVIDIA=y
 # CONFIG_AGP_SIS is not set
 # CONFIG_AGP_SWORKS is not set
 # CONFIG_AGP_VIA is not set
